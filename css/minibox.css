@@ -1,0 +1,34 @@
+/* sets the background to black with opacity */
+div#minibox-bg {
+    background-image: url('bg.png');
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 100000;
+    display: none;
+    text-align: center;
+}
+
+/* style for the buttons below the image */
+div#minibox-bg div#minibox-options {
+    padding: 10px;
+}
+
+div#minibox-bg div#minibox-options a {
+    margin: 0px 5px;
+}
+
+/* close button */
+img#minibox-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* give the images with minibox enabled a pointer cursor */
+img[rel=minibox] {
+    cursor: pointer;
+}
