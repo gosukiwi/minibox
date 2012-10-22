@@ -53,10 +53,15 @@
         };
 
         updateImageContainer = function () {
-            var bodyHeight = $('body').height();
+            var scrollTop = $('body').scrollTop();
+
+            box.css({
+                'marginTop': scrollTop
+            });
+
             imageContainer
                 .attr('src', $(currentImage).attr('src'))
-                .css('margin-top', Math.abs($(currentImage).height() - bodyHeight) / 2);
+                .css('margin-top', Math.abs($(currentImage).height() - screen.height) / 2);
         };
 
         // public methods
@@ -87,7 +92,7 @@
                 box.append(imageContainer);
 
                 if(configuration.showNavigation) {
-                    box.append(navigationContainer)
+                    box.append(navigationContainer);
                 }
 
                 if(configuration.showCloseButton) {
@@ -111,6 +116,8 @@
                         methods.hide();
                     }
                 });
+
+                $(window).bind('scroll.minibox', methods.reposition);
 
                 return this.each(function () {
                     // when the window is resized
