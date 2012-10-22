@@ -65,14 +65,14 @@
                 var btnPrev, btnNext;
 
                 configuration = $.extend({
-                    showNavigation: true,
-                    showCloseButton: true,
-                    prevButton: 'css/previous.png',
-                    nextButton: 'css/next.png',
-                    closeButton: 'css/close.png',
-                    keyCodeRight: 39,
-                    keyCodeLeft: 37,
-                    keyCodeEscape: 27
+                    showNavigation: true, // whether or not to show the navigation options at the bottom of the image
+                    showCloseButton: true, // whether or not to show the close button at the top-right of the page
+                    prevButton: 'css/previous.png', // the prev button image, if you want to change it
+                    nextButton: 'css/next.png', // the next button image, if you want to change it
+                    closeButton: 'css/close.png', // the close button image, if you want to change it
+                    keyCodeRight: 39, // the keyCode which will be equivalent to the next button
+                    keyCodeLeft: 37, // the keyCode which will be equivalent to the prev button
+                    keyCodeEscape: 27 // the keyCode which will be equivalent to the close button
                 }, conf);
 
                 // create html markup
