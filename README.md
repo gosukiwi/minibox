@@ -46,6 +46,13 @@ The following is the default configuration object
     closeButton: 'css/close.png', // the close button image, if you want to change it
     keyCodeRight: 39, // the keyCode which will be equivalent to the next button
     keyCodeLeft: 37, // the keyCode which will be equivalent to the prev button
-    keyCodeEscape: 27 // the keyCode which will be equivalent to the close button
+    keyCodeEscape: 27, // the keyCode which will be equivalent to the close button
+    thumbails: { width: 0, height: 0 } // if you want to resize the images to make thumbails
 }
 ```
+
+## About thumbails
+To create thumbails all you need to do is add the thumbails object to the 
+configuration object. Only one attribute is required, width or height, if only
+one is specified it will calculate the missing parameter to mantain aspect ratio
+, if both are specified it will break the aspect ratio to match the given size.

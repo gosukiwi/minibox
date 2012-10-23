@@ -9,6 +9,7 @@
             browse,
             updateImageContainer,
             getInnerHeight,
+            resizeImage,
             // private variables
             configuration,
             box,
@@ -60,22 +61,44 @@
 
             imageContainer
                 .attr('src', $(currentImage).attr('src'))
-                .css('margin-top', Math.abs($(currentImage).height() - getInnerHeight()) / 2);
+                .css('margin-top', Math.abs($(currentImage).attr('real-height') - getInnerHeight()) / 2);
         };
 
         getInnerHeight = function () {
             var height = 0;
 
-            if(typeof(window.innerWidth) === 'number') {
+            if (typeof (window.innerWidth) === 'number') {
                 height = window.innerHeight;
-            } else if(document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+            } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
                 height = document.documentElement.clientHeight;
-            } else if(document.body && (document.body.clientWidth || document.body.clientHeight)) {
+            } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
                 height = document.body.clientHeight;
             }
 
             return height;
         };
+
+        resizeImage = function(item) {
+            var w = configuration.thumbails.width, 
+                h = configuration.thumbails.height;
+
+            if (w === 0 && h === 0) {
+                return;
+            }
+
+            if (!w) {
+                w = (h * item.width()) / item.height();
+            } else {
+                h = (w * item.height()) / item.width();
+            }
+
+            item
+                .attr('real-height', item.height())
+                .css({
+                    width: w,
+                    height: h
+                });
+        }
 
         // public methods
         methods = {
@@ -90,7 +113,8 @@
                     closeButton: 'css/close.png', // the close button image, if you want to change it
                     keyCodeRight: 39, // the keyCode which will be equivalent to the next button
                     keyCodeLeft: 37, // the keyCode which will be equivalent to the prev button
-                    keyCodeEscape: 27 // the keyCode which will be equivalent to the close button
+                    keyCodeEscape: 27, // the keyCode which will be equivalent to the close button
+                    thumbails: { width: 0, height: 0 } // if you want to resize the images to make thumbails
                 }, conf);
 
                 // create html markup
@@ -104,11 +128,11 @@
                 // add elements to the box
                 box.append(imageContainer);
 
-                if(configuration.showNavigation) {
+                if (configuration.showNavigation) {
                     box.append(navigationContainer);
                 }
 
-                if(configuration.showCloseButton) {
+                if (configuration.showCloseButton) {
                     box.append('<img id="minibox-close" src="' + configuration.closeButton + '" alt="X" />');
                 }
 
@@ -120,7 +144,7 @@
                 btnNext.bind('click.minibox', browse);
                 box.bind('click.minibox', methods.hide);
 
-                $('body').bind('keydown.minibox', function (e) {
+                $('body').bind('keyup.minibox', function (e) {
                     if (e.keyCode === configuration.keyCodeRight) {
                         browse('right');
                     } else if (e.keyCode === configuration.keyCodeLeft) {
@@ -131,15 +155,23 @@
                 });
 
                 $(window).bind('scroll.minibox', methods.reposition);
+                $(window).bind('resize.minibox', methods.reposition);
 
-                return this.each(function () {
-                    // when the window is resized
-                    $(window).bind('resize.minibox', methods.reposition);
-                    // add a click binding to all images inside the minibox container
+                this.each(function () {
                     $(this).find('img[rel=minibox]').each(function (index, item) {
-                        $(item).bind('click.minibox', showImage);
+                        item = $(item);
+
+                        item
+                            .css('display', 'none')
+                            .bind('load', function () {
+                                resizeImage(item);
+                                $(this).css('display', 'inline');
+                            })
+                            .bind('click.minibox', showImage);
                     });
                 });
+
+                return this;
             },
 
             destroy : function () {
@@ -165,14 +197,30 @@
     }
 
     // extend jQuery
-    var methods = minibox();
+    var instances = {};
     $.fn.minibox = function (method) {
-        if (methods[method]) {
-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        var methods,
+            id;
+
+        id = $(this).attr('id');
+
+        if(!id) {
+            $.error('This plugin requires the container to have an id attribute');
         }
+
+        // create new instance if not exists
+        if(!instances[id]) {
+            instances[id] = minibox();
+        }
+
+        methods = instances[id];
 
         if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
+        }
+
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         }
 
         $.error('Method ' +  method + ' does not exist on jQuery.minibox');
