@@ -20,9 +20,9 @@ $('body').minibox();
 
 ## HTML
 
-```
+<pre><code>
 &lt;div class=&quot;container&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/300x300&quot; alt=&quot;&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/350x350&quot; alt=&quot;&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/400x400&quot; alt=&quot;&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/450x450&quot; alt=&quot;&quot;&gt;<br/>&lt;/div&gt;
-``` 
+</code></pre>
 
 # Configuration Options
 
