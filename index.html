@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Minibox by gosukiwi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Minibox</h1>
+        <p>minimal jquery lightbox</p>
+
+        <p class="view"><a href="https://github.com/gosukiwi/minibox">View the Project on GitHub <small>gosukiwi/minibox</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/gosukiwi/minibox/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/gosukiwi/minibox/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/gosukiwi/minibox">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>minibox</h1>
+
+<p>minibox is a minimal lightbox, based on jQuery (it's a jQuery plugin).</p>
+
+<p>The usage is pretty straight forward, the idea is to enable the lightbox for
+all images with the <code>rel="minibox"</code> attribute.</p>
+
+<h2>Javascript</h2>
+
+<pre><code>$('.myContainer').minibox();
+</code></pre>
+
+<p>Enable with all images inside that div, if you want to enable for all images on
+your site, you can do</p>
+
+<pre><code>$('body').minibox();
+</code></pre>
+
+<h3>Options</h3>
+
+<p>For passing options to the lightbox just send an object in the constructor</p>
+
+<pre><code>$('.myContainer').minibox({
+    showNavigation: false,
+    nextButton: 'myImages/mybutton.png'
+});
+</code></pre>
+
+<h2>HTML</h2>
+
+<pre><code>&lt;div class="container"&gt;<br>    &lt;img rel="minibox" src="http://placehold.it/300x300" alt=""&gt;<br>    &lt;img rel="minibox" src="http://placehold.it/350x350" alt=""&gt;<br>    &lt;img rel="minibox" src="http://placehold.it/400x400" alt=""&gt;<br>    &lt;img rel="minibox" src="http://placehold.it/450x450" alt=""&gt;<br>&lt;/div&gt;</code></pre>
+
+<h1>Configuration Options</h1>
+
+<p>The following is the default configuration object</p>
+
+<pre><code>{
+    showNavigation: true, // whether or not to show the navigation options at the bottom of the image
+    showCloseButton: true, // whether or not to show the close button at the top-right of the page
+    prevButton: 'css/previous.png', // the prev button image, if you want to change it
+    nextButton: 'css/next.png', // the next button image, if you want to change it
+    closeButton: 'css/close.png', // the close button image, if you want to change it
+    keyCodeRight: 39, // the keyCode which will be equivalent to the next button
+    keyCodeLeft: 37, // the keyCode which will be equivalent to the prev button
+    keyCodeEscape: 27 // the keyCode which will be equivalent to the close button
+}
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/gosukiwi">gosukiwi</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
