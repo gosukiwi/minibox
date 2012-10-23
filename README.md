@@ -20,7 +20,7 @@ $('body').minibox();
 
 ### Options
 
-For passing options to the lightbox just send an object in the constructor
+To define custom options to the lightbox just pass an object to the constructor
 
 ```
 $('.myContainer').minibox({
