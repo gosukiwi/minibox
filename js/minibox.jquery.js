@@ -8,6 +8,7 @@
             showImage,
             browse,
             updateImageContainer,
+            getInnerHeight,
             // private variables
             configuration,
             box,
@@ -53,15 +54,27 @@
         };
 
         updateImageContainer = function () {
-            var scrollTop = $('body').scrollTop();
-
             box.css({
-                'marginTop': scrollTop
+                'marginTop': $('body').scrollTop()
             });
 
             imageContainer
                 .attr('src', $(currentImage).attr('src'))
-                .css('margin-top', Math.abs($(currentImage).height() - screen.height) / 2);
+                .css('margin-top', Math.abs($(currentImage).height() - getInnerHeight()) / 2);
+        };
+
+        getInnerHeight = function () {
+            var height = 0;
+
+            if(typeof(window.innerWidth) === 'number') {
+                height = window.innerHeight;
+            } else if(document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+                height = document.documentElement.clientHeight;
+            } else if(document.body && (document.body.clientWidth || document.body.clientHeight)) {
+                height = document.body.clientHeight;
+            }
+
+            return height;
         };
 
         // public methods
