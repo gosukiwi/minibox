@@ -1,0 +1,44 @@
+<DOCTYPE html>
+<html>
+    <head>
+        <title>minibox example</title>
+        <link rel="stylesheet" href="css/minibox.css">
+    </head>
+    <body>
+        <h1>minibox Example</h1>
+
+        <div id="container-1">
+            <h2>Container 1</h2>
+
+            <img src="http://i1096.photobucket.com/albums/g340/Lettie6/Photography/roadtrip.jpg" alt="" rel="minibox">
+            <img src="http://i1037.photobucket.com/albums/a455/kleinesAni/Photography/P1110140.jpg" alt="" rel="minibox">
+            <img src="http://i1228.photobucket.com/albums/ee447/sarahsharp3/042-1.jpg" alt="" rel="minibox">
+            <img src="http://i1096.photobucket.com/albums/g340/Lettie6/Photography/surf.jpg" alt="" rel="minibox">
+        </div>
+
+        <div id="container-2">
+            <h2>Container 2</h2>
+
+            <img src="http://i936.photobucket.com/albums/ad207/souzie23/6185418685.jpg" alt="" rel="minibox">
+            <img src="http://gi112.photobucket.com/groups/n189/D8KDJRG4VO/Blue_universe.jpg" alt="" rel="minibox">
+            <img src="http://i629.photobucket.com/albums/uu14/naghana/flowers/Spring_Flower_Wallpaper.jpg" alt="" rel="minibox">
+            <img src="http://i54.photobucket.com/albums/g88/xx_poison-girl_xx/photography/5398f7dd1c6d4337.jpg" alt="" rel="minibox">
+        </div>
+        
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script type="text/javascript" src="javascripts/minibox.jquery.min.js"></script>
+        <script type="text/javascript">
+        (function () {
+            "use strict";
+
+            $('#container-1').minibox({
+                thumbails: { width: 200 }
+            });
+
+            $('#container-2').minibox({
+                thumbails: { height: 150 }
+            });
+        }());
+        </script>
+    </body>
+</html>
