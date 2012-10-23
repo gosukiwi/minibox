@@ -37,4 +37,5 @@ img#minibox-close {
 /* give the images with minibox enabled a pointer cursor */
 img[rel=minibox] {
     cursor: pointer;
+    display: none;
 }
