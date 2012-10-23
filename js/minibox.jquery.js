@@ -60,8 +60,10 @@
             });
 
             imageContainer
+                .hide()
                 .attr('src', $(currentImage).attr('src'))
-                .css('margin-top', Math.abs($(currentImage).attr('real-height') - getInnerHeight()) / 2);
+                .css('margin-top', Math.abs($(currentImage).attr('real-height') - getInnerHeight()) / 2)
+                .fadeIn('fast');
         };
 
         getInnerHeight = function () {
@@ -78,8 +80,8 @@
             return height;
         };
 
-        resizeImage = function(item) {
-            var w = configuration.thumbails.width, 
+        resizeImage = function (item) {
+            var w = configuration.thumbails.width,
                 h = configuration.thumbails.height;
 
             if (w === 0 && h === 0) {
@@ -98,7 +100,7 @@
                     width: w,
                     height: h
                 });
-        }
+        };
 
         // public methods
         methods = {
@@ -162,10 +164,15 @@
                         item = $(item);
 
                         item
-                            .css('display', 'none')
-                            .bind('load', function () {
+                            .hide()
+                            .one('load', function () {
                                 resizeImage(item);
-                                $(this).css('display', 'inline');
+                                $(this).fadeIn('slow');
+                            })
+                            .each(function () {
+                                if (this.complete) {
+                                    $(this).load();
+                                }
                             })
                             .bind('click.minibox', showImage);
                     });
@@ -204,12 +211,12 @@
 
         id = $(this).attr('id');
 
-        if(!id) {
+        if (!id) {
             $.error('This plugin requires the container to have an id attribute');
         }
 
         // create new instance if not exists
-        if(!instances[id]) {
+        if (!instances[id]) {
             instances[id] = minibox();
         }
 
