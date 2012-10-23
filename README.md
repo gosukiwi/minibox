@@ -18,11 +18,24 @@ your site, you can do
 $('body').minibox();
 ```
 
+### Options
+
+For passing options to the lightbox just send an object in the constructor
+
+```
+$('.myContainer').minibox({
+    showNavigation: false,
+    nextButton: 'myImages/mybutton.png'
+});
+```
+
 ## HTML
 
 <pre><code>&lt;div class=&quot;container&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/300x300&quot; alt=&quot;&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/350x350&quot; alt=&quot;&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/400x400&quot; alt=&quot;&quot;&gt;<br/>    &lt;img rel=&quot;minibox&quot; src=&quot;http://placehold.it/450x450&quot; alt=&quot;&quot;&gt;<br/>&lt;/div&gt;</code></pre>
 
 # Configuration Options
+
+The following is the default configuration object
 
 ```
 {
