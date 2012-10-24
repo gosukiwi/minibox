@@ -182,9 +182,7 @@
             },
 
             destroy : function () {
-                return this.each(function () {
-                    $(window).unbind('.minibox');
-                });
+                box.remove();
             },
 
             reposition : function () {
