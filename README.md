@@ -2,6 +2,8 @@
 
 minibox is a minimal lightbox, based on jQuery (it's a jQuery plugin).
 
+You can see it working <a href="http://gosukiwi.github.com/minibox/example.html" target="_blank">here</a>.
+
 The usage is pretty straight forward, all you have to do is add a rel attribute
 ```rel="minibox"``` for all images you want to be in a slide set.
 
