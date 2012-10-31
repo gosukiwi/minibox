@@ -19,7 +19,7 @@
             navigationContainer,
             imageContainer,
             currentImage,
-            interval; // for the setInterval
+            timeout; // for the setTimeout
 
         // private methods 
         showImage = function (e) {
@@ -31,16 +31,20 @@
         };
 
         autoBrowse = function() {
+            if(configuration.autoPlay > 0) {
+                timeout = setTimeout(autoBrowse, configuration.autoPlay * 1000);
+            }
+
             if($(currentImage).attr('src') === $(lastImage).attr('src')) {
                 currentImage = firstImage;
                 updateImageContainer();
                 return;
             }
 
-            browse('right');
+            browse('right', true);
         };
 
-        browse = function (e) {
+        browse = function (e, auto) {
             var direction,
                 nextImage;
 
@@ -66,6 +70,15 @@
 
             currentImage = nextImage;
             updateImageContainer();
+
+            if(!auto) {
+                window.clearTimeout(timeout);
+
+                if(configuration.stopAutoPlayOnButton === false) {
+                    timeout = setTimeout(autoBrowse, 
+                        configuration.autoPlay * 1000);
+                }
+            }
         };
 
         updateImageContainer = function () {
@@ -133,7 +146,8 @@
                     keyCodeEscape: 27, // the keyCode which will be equivalent to the close button
                     thumbails: { width: 0, height: 0 }, // if you want to resize the images to make thumbails
                     autoOpen: false, // if true, it will open on page load
-                    autoPlay: 0 // if x > 0, it will autoplay the gallery every x seconds
+                    autoPlay: 0, // if x > 0, it will autoplay the gallery every x seconds
+                    stopAutoPlayOnButton: false // when the user clicks the prev or next button, stop autoplay if its enabled
                 }, conf);
 
                 // create html markup
@@ -177,7 +191,8 @@
                 $(window).bind('resize.minibox', methods.reposition);
 
                 this.each(function () {
-                    var first;
+                    var first,
+                        t = $(this);
 
                     $(this).find('img[rel=minibox]').each(function (index, item) {
                         item = $(item);
@@ -204,6 +219,10 @@
                             })
                             .bind('click.minibox', showImage);
                     });
+
+                    window.onload = function() { 
+                        t.hide();
+                    };
                 });
 
                 return this;
@@ -221,16 +240,12 @@
                 box.fadeIn('fast');
 
                 if(configuration.autoPlay > 0) {
-                    interval = setInterval(autoBrowse, configuration.autoPlay * 1000);
+                    timeout = setTimeout(autoBrowse, configuration.autoPlay * 1000);
                 }
             },
 
             hide : function () {
                 box.hide();
-
-                if(configuration.autoPlay > 0) {
-                    window.clearInterval(interval);
-                }
             }
         };
 
