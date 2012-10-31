@@ -56,6 +56,14 @@ The following is the default configuration object
 }
 ```
 
+# Events
+
+minibox also lets you hook some funcitons to the lifetime of the lightbox
+
+ * onImagesLoaded: Fires once all images has been loaded
+ * onOpen: After the lightbox opens
+ * onBeforeClose: Before closing the lightbox
+
 ## About thumbails
 To create thumbails all you need to do is add the thumbails object to the 
 configuration object. Only one attribute is required, width or height, if only
