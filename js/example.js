@@ -1,5 +1,8 @@
 (function () {
     "use strict";
 
-    $('.container').minibox();
+    $('.container').minibox({
+        autoOpen: true,
+        autoPlay: 2
+    });
 })();

@@ -10,12 +10,16 @@
             updateImageContainer,
             getInnerHeight,
             resizeImage,
+            autoBrowse,
             // private variables
             configuration,
+            firstImage,
+            lastImage,
             box,
             navigationContainer,
             imageContainer,
-            currentImage;
+            currentImage,
+            interval; // for the setInterval
 
         // private methods 
         showImage = function (e) {
@@ -24,6 +28,16 @@
             currentImage = e.target;
             updateImageContainer();
             methods.show();
+        };
+
+        autoBrowse = function() {
+            if($(currentImage).attr('src') === $(lastImage).attr('src')) {
+                currentImage = firstImage;
+                updateImageContainer();
+                return;
+            }
+
+            browse('right');
         };
 
         browse = function (e) {
@@ -85,6 +99,7 @@
                 h = configuration.thumbails.height;
 
             if (w === 0 && h === 0) {
+                item.attr('real-height', item.height());
                 return;
             }
 
@@ -116,7 +131,9 @@
                     keyCodeRight: 39, // the keyCode which will be equivalent to the next button
                     keyCodeLeft: 37, // the keyCode which will be equivalent to the prev button
                     keyCodeEscape: 27, // the keyCode which will be equivalent to the close button
-                    thumbails: { width: 0, height: 0 } // if you want to resize the images to make thumbails
+                    thumbails: { width: 0, height: 0 }, // if you want to resize the images to make thumbails
+                    autoOpen: false, // if true, it will open on page load
+                    autoPlay: 0 // if x > 0, it will autoplay the gallery every x seconds
                 }, conf);
 
                 // create html markup
@@ -160,14 +177,25 @@
                 $(window).bind('resize.minibox', methods.reposition);
 
                 this.each(function () {
+                    var first;
+
                     $(this).find('img[rel=minibox]').each(function (index, item) {
                         item = $(item);
+                        first = first || item;
+                        firstImage = firstImage || item;
+                        lastImage = item;
 
                         item
                             .hide()
                             .one('load', function () {
                                 resizeImage(item);
                                 $(this).fadeIn('slow');
+
+                                if (configuration.autoOpen && first === item) {
+                                    currentImage = item;
+                                    updateImageContainer();
+                                    methods.show();
+                                }
                             })
                             .each(function () {
                                 if (this.complete) {
@@ -191,10 +219,18 @@
 
             show : function () {
                 box.fadeIn('fast');
+
+                if(configuration.autoPlay > 0) {
+                    interval = setInterval(autoBrowse, configuration.autoPlay * 1000);
+                }
             },
 
             hide : function () {
                 box.hide();
+
+                if(configuration.autoPlay > 0) {
+                    window.clearInterval(interval);
+                }
             }
         };
 
