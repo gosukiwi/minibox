@@ -82,14 +82,19 @@
         };
 
         updateImageContainer = function () {
+            var realHeight = $(currentImage).attr('real-height');
+
             box.css({
                 'marginTop': $('body').scrollTop()
             });
 
             imageContainer
                 .hide()
-                .attr('src', $(currentImage).attr('src'))
-                .css('margin-top', Math.abs($(currentImage).attr('real-height') - getInnerHeight()) / 2)
+                .attr({
+                    src: $(currentImage).attr('src'),
+                    height: realHeight
+                })
+                .css('margin-top', Math.abs(realHeight - getInnerHeight()) / 2)
                 .fadeIn('fast');
         };
 
@@ -109,10 +114,15 @@
 
         resizeImage = function (item) {
             var w = configuration.thumbails.width,
-                h = configuration.thumbails.height;
+                h = configuration.thumbails.height,
+                realHeight = item.height();
 
             if (w === 0 && h === 0) {
-                item.attr('real-height', item.height());
+                if(realHeight > configuration.maxHeight) {
+                    realHeight = configuration.maxHeight;
+                }
+
+                item.attr('real-height', realHeight);
                 return;
             }
 
@@ -149,6 +159,7 @@
                     autoOpen: false, // if true, it will open on page load
                     autoPlay: 0, // if x > 0, it will autoplay the gallery every x seconds
                     stopAutoPlayOnButton: false, // when the user clicks the prev or next button, stop autoplay if its enabled
+                    maxHeight: 650, // the maximum height of the images shown
 
                     // events
                     onImagesLoaded: function () {}, // when the images finished loading

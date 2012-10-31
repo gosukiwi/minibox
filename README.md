@@ -52,7 +52,8 @@ The following is the default configuration object
     thumbails: { width: 0, height: 0 }, // if you want to resize the images to make thumbails
     autoOpen: false, // if true, it will open on page load
     autoPlay: 0, // if > 0, it will autoplay the gallery every x seconds
-    stopAutoPlayOnButton: false // when the user clicks the prev or next button, stop autoplay if its enabled
+    stopAutoPlayOnButton: false, // when the user clicks the prev or next button, stop autoplay if its enabled
+    maxHeight: 650 // the maximum height of the images shown
 }
 ```
 
