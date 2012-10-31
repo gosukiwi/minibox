@@ -136,6 +136,7 @@
                 var btnPrev, btnNext;
 
                 configuration = $.extend({
+                    // options
                     showNavigation: true, // whether or not to show the navigation options at the bottom of the image
                     showCloseButton: true, // whether or not to show the close button at the top-right of the page
                     prevButton: 'css/previous.png', // the prev button image, if you want to change it
@@ -147,7 +148,12 @@
                     thumbails: { width: 0, height: 0 }, // if you want to resize the images to make thumbails
                     autoOpen: false, // if true, it will open on page load
                     autoPlay: 0, // if x > 0, it will autoplay the gallery every x seconds
-                    stopAutoPlayOnButton: false // when the user clicks the prev or next button, stop autoplay if its enabled
+                    stopAutoPlayOnButton: false, // when the user clicks the prev or next button, stop autoplay if its enabled
+
+                    // events
+                    onImagesLoaded: function () {}, // when the images finished loading
+                    onOpen: function () {}, // when the lightbox opens
+                    onBeforeClose: function () {} // before the lightbox closes
                 }, conf);
 
                 // create html markup
@@ -191,10 +197,12 @@
                 $(window).bind('resize.minibox', methods.reposition);
 
                 this.each(function () {
-                    var first,
-                        t = $(this);
+                    var first, 
+                        imagesList = $(this).find('img[rel=minibox]'),
+                        totalImages = imagesList.length,
+                        imagesLoaded = 0;
 
-                    $(this).find('img[rel=minibox]').each(function (index, item) {
+                    imagesList.each(function (index, item) {
                         item = $(item);
                         first = first || item;
                         firstImage = firstImage || item;
@@ -203,6 +211,7 @@
                         item
                             .hide()
                             .one('load', function () {
+                                imagesLoaded += 1;
                                 resizeImage(item);
                                 $(this).fadeIn('slow');
 
@@ -210,6 +219,10 @@
                                     currentImage = item;
                                     updateImageContainer();
                                     methods.show();
+                                }
+
+                                if(imagesLoaded === totalImages) {
+                                    configuration.onImagesLoaded();
                                 }
                             })
                             .each(function () {
@@ -219,10 +232,6 @@
                             })
                             .bind('click.minibox', showImage);
                     });
-
-                    window.onload = function() { 
-                        t.hide();
-                    };
                 });
 
                 return this;
@@ -242,9 +251,12 @@
                 if(configuration.autoPlay > 0) {
                     timeout = setTimeout(autoBrowse, configuration.autoPlay * 1000);
                 }
+
+                configuration.onOpen();
             },
 
             hide : function () {
+                configuration.onBeforeClose();
                 box.hide();
             }
         };
