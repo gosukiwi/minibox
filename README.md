@@ -49,7 +49,9 @@ The following is the default configuration object
     keyCodeRight: 39, // the keyCode which will be equivalent to the next button
     keyCodeLeft: 37, // the keyCode which will be equivalent to the prev button
     keyCodeEscape: 27, // the keyCode which will be equivalent to the close button
-    thumbails: { width: 0, height: 0 } // if you want to resize the images to make thumbails
+    thumbails: { width: 0, height: 0 }, // if you want to resize the images to make thumbails
+    autoOpen: false, // if true, it will open on page load
+    autoPlay: 0 // if > 0, it will autoplay the gallery every x seconds
 }
 ```
 
